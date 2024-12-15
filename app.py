@@ -19,7 +19,7 @@ def set_background(image_path):
     )
 
 # Call the function to set the background
-set_background("./ast/barq_logo.png")
+set_background("ast/barq_logo.png")
 
 # Streamlit UI
 st.title("barq T2S")
