@@ -1,5 +1,6 @@
 import streamlit as st
 from elevenlabs import ElevenLabs
+from pydub import AudioSegment  # Importing pydub for audio conversion
 
 # Set background image
 def set_background(image_path):
@@ -48,20 +49,25 @@ if st.button("Generate Speech"):
                 model_id="eleven_multilingual_v2",
             )
 
-            # Save the audio file locally
-            audio_file_path = "output_audio.mp3"
-            with open(audio_file_path, "wb") as audio_file:
+            # Save the audio as an MP3 file
+            mp3_file_path = "output_audio.mp3"
+            with open(mp3_file_path, "wb") as audio_file:
                 for chunk in res:
                     audio_file.write(chunk)
 
+            # Convert MP3 to WAV using pydub
+            wav_file_path = "output_audio.wav"
+            audio = AudioSegment.from_mp3(mp3_file_path)
+            audio.export(wav_file_path, format="wav")
+
             st.success("Speech generated successfully!")
-            # Provide download link for the audio file
-            with open(audio_file_path, "rb") as file:
+            # Provide download link for the WAV audio file
+            with open(wav_file_path, "rb") as file:
                 st.download_button(
-                    label="Download Audio",
+                    label="Download Audio (WAV)",
                     data=file,
-                    file_name="output_audio.mp3",
-                    mime="audio/mpeg",
+                    file_name="output_audio.wav",
+                    mime="audio/wav",
                 )
 
         except Exception as e:
