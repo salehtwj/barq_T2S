@@ -1,6 +1,26 @@
 import streamlit as st
 from elevenlabs import ElevenLabs
 
+# Set background image
+def set_background(image_path):
+    """Set the background image for the Streamlit app."""
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background: url({image_path});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Call the function to set the background
+set_background("./ast/barq_logo.png")
+
 # Streamlit UI
 st.title("barq T2S")
 st.sidebar.header("Configuration")
